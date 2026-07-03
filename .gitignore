@@ -1,0 +1,10 @@
+# --- exercise solution — never ship to applicants ---
+CLAUDE.md
+solution/
+
+# --- python / tooling ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.idea/
