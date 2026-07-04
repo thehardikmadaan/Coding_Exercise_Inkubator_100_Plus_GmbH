@@ -15,11 +15,11 @@ After applying all data quality corrections from Chapter~\ref{chap:methodology},
 \toprule
 \textbf{Company Name} & \textbf{Ticker} & \textbf{ISIN} & \textbf{Performance (\%)} & \textbf{30-Day Avg.\ Volume} \\
 \midrule
-General Electric & GENE & XX0000000010 & 940.00\% & 8{,}167{,}106 \\
 Netflix          & NETF & XX0000000028 & 180.00\% & 4{,}974{,}503 \\
 Adobe            & ADOB & XX0000000036 & 141.49\% & 3{,}084{,}781 \\
 Nokia            & NOKI & XX0000000044 & 110.00\% &         5{,}131 \\
 NVIDIA           & NVID & XX0000000051 &  85.00\% & 8{,}284{,}994 \\
+Lockheed Martin  & LOCK & XX0000000531 &  69.85\% & 1{,}469{,}291 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -27,7 +27,7 @@ NVIDIA           & NVID & XX0000000051 &  85.00\% & 8{,}284{,}994 \\
 Key observations about this table:
 
 \begin{itemize}
-    \item \textbf{Ranking robustness:} the gap between rank~5 (NVIDIA, 85.0\%) and rank~6 (Lockheed Martin, 69.85\%) is approximately 15 percentage points — a comfortable margin confirming the top-5 is not sensitive to small data noise or borderline corrections.
+    \item \textbf{General Electric Removed:} General Electric originally showed a 940\% return due to an unadjusted 1-for-8 reverse stock split on August 2. We explicitly corrected for this corporate action in the data preparation phase. Once adjusted, GE's true organic return fell below 30\%, naturally dropping it out of the Top 5 and allowing Lockheed Martin to rightfully enter the ranking.
 
     \item \textbf{Nokia's volume:} at 5{,}131 shares per day, Nokia's 30-day average volume is orders of magnitude smaller than all peers. This is consistent with Nokia's very low per-share price in this dataset (a few euros vs.\ hundreds for Adobe/Netflix) and was confirmed not to be a data error.
 
@@ -38,11 +38,11 @@ Key observations about this table:
 \section{Price History Plots}
 \label{sec:plots}
 
-Figure~\ref{fig:price_plots} shows the daily close price of all five stocks across the analysis window. Two scales are presented.
+Figure~\ref{fig:price_plots} shows the daily close price of all five stocks across the analysis window, indexed so that every stock starts at 100 on June~1. This normalisation is important: the five stocks span a huge range of absolute prices (Nokia at $\sim$\$2 vs.\ Adobe at $\sim$\$430), so plotting raw prices would make the low-priced stocks invisible. Starting every stock at 100 means the y-axis directly shows the cumulative return.
 
-\textbf{Why two scales?} On the linear scale, General Electric's jump in August dominates the y-axis, compressing the other four stocks into a narrow band near the bottom. The logarithmic scale spreads the stocks proportionally to their growth rate, making all five trajectories clearly readable side by side.
+\textbf{Why two scales?} On the linear scale, Netflix towers above the others because of its absolute return size. The log scale is useful because it separates all five stocks clearly, making the trajectories of lower-growth stocks like Lockheed Martin and NVIDIA more visible.
 
-\textbf{Netflix dashed segment:} the dashed portion of Netflix's line (July 2021) marks the 22 consecutive missing trading days filled by linear interpolation. This is estimated data, not observed prices, and is styled differently to be transparent about this.
+\textbf{Netflix dashed segment:} the dashed portion of Netflix's line (July 2021) marks the 22 consecutive missing trading days filled by linear interpolation.
 
 The code below shows how the chart handles Netflix's interpolated gap honestly by splitting the series into three segments and rendering the middle one as dashed:
 
@@ -80,7 +80,7 @@ for _, row in top5.iterrows():
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Abbildungen/plot_normal.png}
-        \caption{Linear scale. General Electric's August jump is clearly visible. Nokia (orange) sits near zero due to its low absolute price.}
+        \caption{Linear scale. All stocks start at 100 on June~1. Netflix's steady rise to $\sim$280 is the largest absolute move.}
         \label{fig:plot_normal}
     \end{subfigure}
 
@@ -89,10 +89,10 @@ for _, row in top5.iterrows():
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Abbildungen/plot_log.png}
-        \caption{Logarithmic scale. All five trajectories are separated and readable; Nokia and NVIDIA are now clearly visible.}
+        \caption{Logarithmic scale. On this scale, equal vertical distance means equal percentage gain. All five stocks are spread apart and individually readable.}
         \label{fig:plot_log}
     \end{subfigure}
 
-    \caption{Daily close price of the top 5 performing stocks (June~1–October~13, 2021). The dashed Netflix segment indicates interpolated July 2021 data.}
+    \caption{Indexed close price history of the top 5 performing stocks (June~1–October~13, 2021), normalised so that all stocks start at 100. The dashed Netflix segment indicates interpolated data.}
     \label{fig:price_plots}
 \end{figure}

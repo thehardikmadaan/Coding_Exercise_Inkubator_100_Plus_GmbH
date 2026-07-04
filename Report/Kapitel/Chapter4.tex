@@ -2,14 +2,16 @@
 \label{chap:observations}
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{General Electric's Price Jump — a Level Shift, Not an Error}
+\section{General Electric's Reverse Split Adjustment}
 \label{sec:ge_jump}
 
-The price history plot for General Electric shows a sharp near-vertical rise between July 30 and August 2, 2021. This was initially investigated as a potential data error (duplicate dates or a leftover uncorrected outlier), but close inspection of the raw data ruled that out.
+During initial analysis, General Electric appeared to be the top-performing stock with a massive 940\% return, driven by a near-vertical price jump from $\sim$\$22 to $\sim$\$182 between July 30 and August 2, 2021. 
 
-\textbf{What the data showed:} on August 2, all four price columns (\texttt{open}, \texttt{high}, \texttt{low}, \texttt{close}) shifted together from roughly \$22 to roughly \$182 — an approximately 8-fold increase overnight. Crucially, the price \emph{held} at the new level afterward rather than reverting. Computing the daily percentage change across General Electric's full year confirmed a single isolated move of \textbf{+694\%} on August 2, with every other trading day in the year showing single-digit moves (the next largest was +7.3\% on February 2).
+\textbf{Identifying the anomaly:} Unlike the 10 corrupted rows where only \texttt{high}/\texttt{close} were artificially inflated and immediately reverted the next day, GE's jump involved all four price columns shifting simultaneously and establishing a persistent new price level. This pattern is not a data error, but rather a classic signature of a corporate action — specifically, a 1-for-8 reverse stock split.
 
-\textbf{Why it was not corrected:} unlike the 10 rows with the 11$\times$ inflation bug (where only \texttt{high}/\texttt{close} were affected and the values reverted to normal the next day), this jump involved all four price columns simultaneously and created a persistent new price level. That pattern is characteristic of a corporate action — specifically a reverse stock split, which multiplies the share price by the split ratio and divides the share count accordingly. The jump was the designed mechanism that produced General Electric's 940\% return over the analysis period. Correcting it would have destroyed the very signal being measured.
+\textbf{Why it was adjusted:} While a reverse split mathematically increases the per-share price by a factor of 8, it proportionately reduces the number of shares an investor owns. It does not represent true organic performance or portfolio growth. Leaving this unadjusted would produce a mathematically correct but financially misleading 940\% return. 
+
+To ensure the final ranking reflected true market performance, a specific correction was applied during the data cleaning phase: all of General Electric's historical prices prior to August 2 were multiplied by 8 (and volume divided by 8). This realigned the historical baseline, revealing GE's true organic return over the period to be less than 30\%. As a result, GE correctly fell out of the Top 5, allowing Lockheed Martin to rightfully enter the ranking.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Signs of Synthetic Data Design}
@@ -18,9 +20,9 @@ The price history plot for General Electric shows a sharp near-vertical rise bet
 Several characteristics of the dataset point clearly to its synthetic origin:
 
 \begin{itemize}
-    \item \textbf{Round-number returns:} four of the five top performers have returns of exactly 940.00\%, 180.00\%, 110.00\%, and 85.00\%. Adobe is the only exception at 141.49\%. Round percentages are extremely unlikely to occur naturally across multiple independent stocks in a single time window. This strongly suggests the dataset was designed with specific target returns for a subset of ``winner'' stocks.
+    \item \textbf{Round-number returns:} several top performers have suspiciously exact returns, such as Netflix (180.00\%), Nokia (110.00\%), and NVIDIA (85.00\%). General Electric, before adjustment, also sat at exactly 940.00\%. Round percentages are extremely unlikely to occur naturally across multiple independent stocks in a single time window. This strongly suggests the dataset was designed with specific target returns for a subset of ``winner'' stocks.
 
-    \item \textbf{Discrete price jumps as the mechanism:} the data generator appears to have implemented target returns via a single-day price jump rather than a smooth exponential curve. General Electric's +694\% daily move is a clear example of this. This is a convenient shortcut in synthetic data construction but would be essentially impossible in real equity markets.
+    \item \textbf{Discrete price jumps as the mechanism:} the data generator appears to have implemented target returns via single-day price jumps rather than a smooth exponential curve. General Electric's raw +694\% daily move (which we adjusted) was a clear example of this. This is a convenient shortcut in synthetic data construction but would be essentially impossible in real equity markets.
 
     \item \textbf{Systematic data corruption at a fixed ratio:} the 10 corrupted rows all shared an identical multiplier of approximately 11 across unrelated stocks. Real data errors at this scale would be unlikely to produce such a consistent signature. This pattern is more consistent with a data generation bug that applied a specific transformation to a randomly selected subset of rows.
 
@@ -31,8 +33,8 @@ Several characteristics of the dataset point clearly to its synthetic origin:
 \section{Conclusion}
 \label{sec:conclusion}
 
-The five best-performing stocks from June 1 to October 13, 2021 were General Electric (940.0\%), Netflix (180.0\%), Adobe (141.49\%), Nokia (110.0\%), and NVIDIA (85.0\%). These results are supported by a multi-step data quality process that identified and corrected 10 systematically inflated price rows, interpolated 23 missing records per-ticker to avoid cross-instrument contamination, and resolved a corrupted CSV header before any calculations were performed.
+The five best-performing stocks from June 1 to October 13, 2021 were Netflix (180.0\%), Adobe (141.49\%), Nokia (110.0\%), NVIDIA (85.0\%), and Lockheed Martin (69.85\%). These results are supported by a rigorous, multi-step data quality process that identified and corrected 10 systematically inflated price rows, adjusted historical prices for a 1-for-8 reverse stock split (General Electric), interpolated 23 missing records per-ticker, and resolved a corrupted CSV header before any calculations were performed.
 
-The analysis also demonstrated several principles that matter in real-world data work: the importance of distinguishing genuine data errors from legitimate market events (the GE jump), the value of stating ambiguous terms explicitly before computing them (30 trading days vs.\ 30 calendar days), and the risk of reusing a filtered dataset for a calculation that requires a wider data range (the volume lookback extending before the analysis window).
+The analysis also demonstrated several principles that matter in real-world data work: the importance of distinguishing data entry errors from legitimate corporate actions (and adjusting for them mathematically), the value of stating ambiguous terms explicitly before computing them (30 trading days vs.\ 30 calendar days), and the risk of reusing a filtered dataset for a calculation that requires a wider data range (the volume lookback extending before the analysis window).
 
 The full code is available in \texttt{hardik\_src/solution.ipynb} for reference.

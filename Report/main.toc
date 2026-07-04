@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {3.1}Top 5 Performing Stocks}{8}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Price History Plots}{8}{section.3.2}%
 \contentsline {chapter}{\numberline {4}Further Observations and Conclusion}{11}{chapter.4}%
-\contentsline {section}{\numberline {4.1}General Electric's Price Jump — a Level Shift, Not an Error}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.1}General Electric's Reverse Split Adjustment}{11}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Signs of Synthetic Data Design}{11}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Conclusion}{12}{section.4.3}%
 \contentsline {chapter}{\nonumberline References}{13}{chapter*.5}%

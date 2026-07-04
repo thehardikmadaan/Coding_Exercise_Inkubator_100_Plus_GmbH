@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.22)  4 JUL 2026 18:38
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.22)  4 JUL 2026 19:14
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -3055,15 +3055,15 @@ Package luatex.def Info: Abbildungen/plot_log.png  used on input line 91.
 ) (./Kapitel/Chapter4.tex [9] [10<./Abbildungen/plot_normal.png><./Abbildungen/p
 lot_log.png>]
 chapter 4.
-
-Overfull \hbox (7.1425pt too wide) in paragraph at lines 21--22
-[]\TU/XCharter(0)/b/n/10.95 Round-number re-turns: \TU/XCharter(0)/m/n/10.95 fou
-r of the five top per-form-ers have re-turns of ex-actly 940.00%, 180.00%,
- []
-
 [11
 
-]) [12]
+]
+Overfull \hbox (14.03598pt too wide) in paragraph at lines 36--37
+\TU/XCharter(0)/m/n/10.95 The five best-performing stocks from June 1 to Oc-to-b
+er 13, 2021 were Net-flix (180.0%), Adobe (141.49%),
+ []
+
+) [12]
 chapter without number
 
 Overfull \hbox (25.53441pt too wide) in paragraph at lines 297--297
@@ -3124,6 +3124,10 @@ Package tudapub Warning: You did not provide a Label for key discussion.
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -3139,7 +3143,7 @@ Here is how much of LuaTeX's memory you used:
 50 attribute, 79 glue_spec, 39 attribute_list, 2 write, 4 pdf_action, 4 pdf_colo
 rstack nodes
    avail lists: 1:4,2:5810,3:348,4:4203,5:3094,6:142,7:9676,8:66,9:8166,10:15,11
-:445
+:472
  67621 multiletter control sequences out of 65536+600000
  133 fonts using 20000575 bytes
  122i,21n,142p,10950b,2512s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -3155,9 +3159,9 @@ nts/opentype/google/roboto/Roboto-Bold.otf></usr/local/texlive/2024/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (18 pages, 506254 bytes).
+Output written on main.pdf (18 pages, 552157 bytes).
 
-PDF statistics: 436 PDF objects out of 1000 (max. 8388607)
+PDF statistics: 437 PDF objects out of 1000 (max. 8388607)
  176 named destinations out of 1000 (max. 131072)
  175 words of extra memory for PDF output out of 10000 (max. 100000000)
 
