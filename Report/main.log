@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.22)  4 JUL 2026 18:16
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.22)  4 JUL 2026 18:25
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -2913,63 +2913,69 @@ Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count485
 Package tocbasic Info: setting babel extension for `lol' on input line 239.
 \scr@dte@lstlisting@maxnumwidth=\skip96
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: luatex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(79.66771pt, 438.17252pt, 79.66771pt)
+* v-part:(T,H,B)=(85.35826pt, 674.33041pt, 85.35826pt)
+* \paperwidth=597.50793pt
+* \paperheight=845.04694pt
+* \textwidth=438.17252pt
+* \textheight=674.33041pt
+* \oddsidemargin=7.39772pt
+* \evensidemargin=7.39772pt
+* \topmargin=-18.13809pt
+* \headheight=17.0pt
+* \headsep=14.22636pt
+* \topskip=11.0pt
+* \footskip=25.60747pt
+* \marginparwidth=59.7508pt
+* \marginparsep=12.8401pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package tudapub/thesis Info: You submitted birthplace data for title
-(tudapub/thesis)             information.
-(tudapub/thesis)             This field is only used for type=dr/drfinal.
-(tudapub/thesis)             It will be ignored.
-
-
-
-Package tudapub/thesis Warning: I can't recognize your department .
-(tudapub/thesis)                I will use the string '' directly.
-(tudapub/thesis)                Ensure your department has to shortcut.
-(tudapub/thesis)                See tudathesis documentation for further
-(tudapub/thesis)                details.
-
-Package scrbase Info: activating english \departmentname on input line 288.
-\ptxcd_xmpdata_stream=\write7
-
-\openout7 = main.xmpdata
 LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 288.
-LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
-(Font)              scaled to size 10.95pt on input line 288.
-LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
-(Font)              scaled to size 30.0pt on input line 288.
-LaTeX Font Info:    Font shape `TU/Roboto(9)/m/n' will be
-(Font)              scaled to size 10.95pt on input line 288.
-LaTeX Font Info:    Font shape `TU/Roboto(9)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 288.
-<image.png, id=9, 1.00375pt x 1.00375pt>
-File: image.png Graphic file (type png)
-<use image.png>
-Package luatex.def Info: image.png  used on input line 288.
-(luatex.def)             Requested size: 62.83006pt x 62.59605pt.
-[1
-
-
-
-
-
-
-
-<./image.png>]
-LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
-(Font)              scaled to size 20.74pt on input line 295.
-LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
-(Font)              scaled to size 23.2pt on input line 295.
- (./main.toc)
-\tf@toc=\write8
-
-\openout8 = main.toc
+(Font)              scaled to size 10.95pt on input line 253.
 LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 296.
+(Font)              scaled to size 26.0pt on input line 253.
+LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
+(Font)              scaled to size 26.0pt on input line 253.
+LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
+(Font)              scaled to size 18.0pt on input line 255.
+LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 258.
+LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
+(Font)              scaled to size 10.95pt on input line 264.
  [1
 
 
 
 
+
+]
+LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
+(Font)              scaled to size 20.74pt on input line 281.
+LaTeX Font Info:    Font shape `TU/Roboto(0)/b/n' will be
+(Font)              scaled to size 23.2pt on input line 281.
+
+(./main.toc)
+\tf@toc=\write7
+
+\openout7 = main.toc
+LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 282.
+ [1
 
 
 
@@ -3031,24 +3037,21 @@ e \TU/RobotoMono(0)/m/n/10.95 high \TU/XCharter(0)/m/n/10.95 and \TU/RobotoMono
 
 [3
 
-] [4]
-LaTeX Font Info:    Font shape `TU/Roboto(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 116.
- [5] [6]) (./Kapitel/Chapter3.tex [7]
+] [4] [5] [6]) (./Kapitel/Chapter3.tex [7]
 chapter 3.
 [8
 
 ]
-<Abbildungen/plot_normal.png, id=224, 926.5014pt x 423.984pt>
+<Abbildungen/plot_normal.png, id=222, 918.632pt x 416.3555pt>
 File: Abbildungen/plot_normal.png Graphic file (type png)
 <use Abbildungen/plot_normal.png>
 Package luatex.def Info: Abbildungen/plot_normal.png  used on input line 82.
-(luatex.def)             Requested size: 459.5106pt x 210.28352pt.
-<Abbildungen/plot_log.png, id=225, 926.5014pt x 423.984pt>
+(luatex.def)             Requested size: 459.5106pt x 208.26616pt.
+<Abbildungen/plot_log.png, id=223, 918.632pt x 416.3555pt>
 File: Abbildungen/plot_log.png Graphic file (type png)
 <use Abbildungen/plot_log.png>
 Package luatex.def Info: Abbildungen/plot_log.png  used on input line 91.
-(luatex.def)             Requested size: 459.5106pt x 210.28352pt.
+(luatex.def)             Requested size: 459.5106pt x 208.26616pt.
 ) (./Kapitel/Chapter4.tex [9] [10<./Abbildungen/plot_normal.png><./Abbildungen/p
 lot_log.png>]
 chapter 4.
@@ -3063,14 +3066,14 @@ r of the five top per-form-ers have re-turns of ex-actly 940.00%, 180.00%,
 ]) [12]
 chapter without number
 
-Overfull \hbox (25.53441pt too wide) in paragraph at lines 311--311
+Overfull \hbox (25.53441pt too wide) in paragraph at lines 297--297
 []\TU/XCharter(0)/m/n/10.95 In-vesto-pe-dia. Av-er-age daily trad-ing vol-ume (A
 DTV), 2023. \TU/XCharter(0)/m/sc/10.95 󰀠󰀝󰀗\TU/XCharter(0)/m/n/10.95 : 
 []$\TU/RobotoMono(0)/m/n/10 https : / / www . investopedia .
  []
 
 
-Overfull \hbox (5.0033pt too wide) in paragraph at lines 311--311
+Overfull \hbox (5.0033pt too wide) in paragraph at lines 297--297
 []\TU/XCharter(0)/m/n/10.95 The pan-das de-vel-op-ment team. Pandas-dev/pandas: pan-das, 2023. \TU/XCharter(0)/m/sc/10.95 
 󰀠󰀝󰀗\TU/XCharter(0)/m/n/10.95 : []$\TU/RobotoMono(0)/m/n/10 https : / / pandas .
  []
@@ -3078,21 +3081,21 @@ Overfull \hbox (5.0033pt too wide) in paragraph at lines 311--311
 [13
 
 ] (./main.lof)
-\tf@lof=\write9
+\tf@lof=\write8
 
-\openout9 = main.lof
+\openout8 = main.lof
  [14
 
 ] (./main.lot)
-\tf@lot=\write10
+\tf@lot=\write9
 
-\openout10 = main.lot
+\openout9 = main.lot
  [15
 
 ] (./main.lol)
-\tf@lol=\write11
+\tf@lol=\write10
 
-\openout11 = main.lol
+\openout10 = main.lol
 
 
 Package tudapub Warning: You did not provide a Label for key introduction.
@@ -3129,16 +3132,15 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 )
 
 Here is how much of LuaTeX's memory you used:
- 46818 strings out of 476447
- 244175,2373549 words of node,token memory allocated
- 3800 words of node memory still in use:
-   65 hlist, 8 vlist, 13 rule, 9 disc, 14 local_par, 4 math, 106 glue, 16 kern, 
-24 penalty, 89 glyph, 232 attribute, 79 glue_spec, 123 attribute_list, 2 write, 
-4 pdf_action, 22 pdf_colorstack, 1 pdf_setmatrix, 1 pdf_save, 1 pdf_restore node
-s
-   avail lists: 1:2,2:5810,3:348,4:4203,5:3094,6:142,7:9677,8:66,9:8166,10:15,11
+ 46784 strings out of 476447
+ 195346,2373549 words of node,token memory allocated
+ 1220 words of node memory still in use:
+   23 hlist, 4 vlist, 6 rule, 4 local_par, 25 glue, 4 kern, 4 penalty, 1 glyph, 
+50 attribute, 79 glue_spec, 39 attribute_list, 2 write, 4 pdf_action, 4 pdf_colo
+rstack nodes
+   avail lists: 1:4,2:5810,3:348,4:4203,5:3094,6:142,7:9676,8:66,9:8166,10:15,11
 :445
- 67651 multiletter control sequences out of 65536+600000
+ 67621 multiletter control sequences out of 65536+600000
  133 fonts using 20000575 bytes
  122i,21n,142p,10950b,2512s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/opentype/public/xcharter/XCharter-Ital
@@ -3153,9 +3155,9 @@ nts/opentype/google/roboto/Roboto-Bold.otf></usr/local/texlive/2024/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (18 pages, 420060 bytes).
+Output written on main.pdf (18 pages, 470166 bytes).
 
-PDF statistics: 438 PDF objects out of 1000 (max. 8388607)
+PDF statistics: 436 PDF objects out of 1000 (max. 8388607)
  176 named destinations out of 1000 (max. 131072)
  175 words of extra memory for PDF output out of 10000 (max. 100000000)
 
