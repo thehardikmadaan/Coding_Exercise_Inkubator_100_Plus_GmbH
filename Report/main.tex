@@ -238,54 +238,40 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
- 
+% ── Custom minimal title page ─────────────────────────────────────────────────
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Metadaten für PDF Erzeugung (glaube ich zumindest) %%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\Metadata{
-	title= Equity Data Analysis: Working Student Coding Exercise, %Komma hinter dem Titel nicht vergessen ;)
-	author= Hardik,
-	%	date=2019-04-29,
-    %	keywords=TU Darmstadt \sep Corporate Design \sep LaTeX
-}
+\begin{titlepage}
+\newgeometry{top=30mm, bottom=30mm, left=28mm, right=28mm}
+\definecolor{accentblue}{RGB}{0,90,169}
 
+% Top accent bar
+{\color{accentblue}\rule{\linewidth}{3pt}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Einstellungen Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\newcommand{\thesisTitel}{Equity Data Analysis: Working Student Coding Exercise}
-\newcommand{\authors}{Hardik}
-\newcommand{\betreuer}{}
-\newcommand{\professor}{}
-\newcommand{\dateOfSubmission}{\today}
-\birthplace{}						% Geburtsort, bei Dissertationen zwingend notwendig
+\vspace{28mm}
 
+% Title block
+{\sffamily\fontsize{26}{32}\selectfont\textbf{Equity Data Analysis}\par}
+\vspace{4mm}
+{\sffamily\fontsize{18}{24}\selectfont\color{accentblue} Working Student Coding Exercise\par}
 
-%\examdate{\today} 	% nicht erforderlich bei studentischen Arbeiten, kann auch bei Abschlussarbeiten freigelassen werden
-%\submissiondate{\dateOfSubmission}	% In diesem Feld muss mindestens ein Leerzeichen sein, damit "Tag der Einreichung" auf der Titelseite erscheint. Das Feld kann leer bleiben, das Datum wird bei Abgabe vom MechCenter eingetragen, nur bei Bachelor-/Masterthesen. Für ADP/ARP das Feld \date verwenden! 
-\date{\dateOfSubmission} %muss für Studienarbeiten aktiviert sein, bei BT/MT auskommentieren
+\vspace{12mm}
+{\sffamily\large Inkubator 100+ GmbH\par}
 
+\vfill
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Info block at the bottom
+\begin{tabular}{@{}ll}
+  \sffamily\textbf{Author}  & \sffamily Hardik Madaan \\
+  \sffamily\textbf{Date}    & \sffamily \today \\
+  \sffamily\textbf{Tool}    & \sffamily Python 3 --- pandas, matplotlib \\
+\end{tabular}
 
-\title{\\\vspace{5mm} \thesisTitel\vspace{5mm}}
+\vspace{8mm}
+{\color{accentblue}\rule{\linewidth}{3pt}}
 
-\author[\authors]{\authors}		% optionales Argument ist die Signatur,
-\reviewer{}	%Gutachter: mit \and können weitere Betreuer hinzugefügt werden
-\department{} 
-\institute{}
-\group{}
-%\tuprints{urn=1234,printid=12345}
-%\dedication{Für alle, die \TeX{} nutzen.}
-%\title{\thesisTitel}
-%\subtitle{\thesisTitelEnglish} %vspace(0.5cm) hinter den Titel, damit ein vertikaler Abstand zur nächsten Zeile erzeugt wird
+\restoregeometry
+\end{titlepage}
 
-%Titel erstellen%
-%
-\maketitle
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Front matter (roman page numbers) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
