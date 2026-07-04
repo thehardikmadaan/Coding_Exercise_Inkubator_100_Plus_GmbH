@@ -1,0 +1,320 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%===================================================%
+%=========#########=====#########=====########======%
+%========#########=====#########=====#########======%
+%=======####==========###===========###===###=======%
+%======####==========###===========###===###========%
+%=====#########=====#########=====#########=========%
+%====#########===========###=====########===========%
+%===####================###=====###==###============%
+%==####==========#########=====###====###===========%
+%=####==========#########=====###======###==========%
+%===================================================%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%																						%
+% !!!!!!!!! WICHTIG: BITTE LESEN !!!!!!!!!!!!											%
+%																						%
+% Bei Fragen oder Problemen mit der FSR-Latex-Vorlage bitte an den BETREUER wenden und  %
+% NICHT bei <peiTeX TeXnical Solutions> und keinen Issue auf Github erstellen			%
+% <peiTeX TeXnical Solutions> betreut die nur offizielle TUDA Latex Vorlage und NICHT  	%
+% diese FSR Vorage. In dieser Vorlage werden einige Befehle der original TADA Vorlage 	%
+% überschrieben, sodass es hin und wieder zu Problemen kommen kann. Diese Bitte dem 	%
+% Betreuer mitteilen. Vielen Dank!														%	
+%																						%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                                       %
+%!!!!!!!! ATTENTION: PLEASE READ!!!!!!!!!!!                                             %      
+%                                                                                       %
+% If you have any questions or problems with the FSR latex template please contact your	%
+% SUPERVISOR and DO NOT ask <peiTeX TeXnical Solutions> and DO NOT open an issue on 	%
+% Github. <peiTeX TeXnical Solutions> maintains the official TUDA latex template only 	%
+% and NOT this FSR template. In this template some commands of the original TADA 		%
+% template are modified, which can cause problems from time to time. Please inform your	%
+% SUPERVISOR about this. Thank you very much!											%
+%																						%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is file is based on `DEMO-TUDaPub.tex' version 2.09 (2020/03/13),                %
+% by Marei Peischl. The development respository can be found at                         %
+% https://github.com/tudace/tuda_latex_templates                                        %
+%                                                                                       %
+% TeX program = lualatex                                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preambel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\documentclass[
+	english,				% ngerman/english 
+	ruledheaders=all,		% Ebene bis zu der die Überschriften mit Linien abgetrennt werden, vgl. DEMO-TUDaPub
+	class=report,			% Basisdokumentenklasse. Wählt die Korrespondierende KOMA-Script Klasse
+	thesis={type=},	% Dokumententyp --> type=bachelor, master, sta  (Bachelor, Master oder Studienarbeit) Achtung: Bei Studienarbeiten muss weiter unten das Feld \date anstatt \submissiondate ausgewählt werden!
+	accentcolor=1a,			% Auswahl der Akzentfarbe
+	custommargins=geometry,	% Ränder werden mithilfe von typearea automatisch berechnet
+	marginpar=false,		% Kopfzeile und Fußzeile erstrecken sich nicht über die Randnotizspalte
+	%BCOR=5mm,				% Bindekorrektur, falls notwendig
+	parskip=half-,			% Absatzkennzeichnung durch Abstand vgl. KOMA-Sript
+	fontsize=11pt,			% Basisschriftgröße laut Corporate Design ist mit 9pt häufig zu klein
+	captions=oneline,		% Passt die Bildunterschriften an
+	numbers=noenddot,		% Entfernt den Punkt hinter Sections/Abbildungen 1.1. --> 1.1
+	pdfa=true,				% aktiviert PDF/A --> mit LuaLaTex kompilieren 
+	logofile=image,		% Falls die Logo Dateien nicht vorliegen
+]{tudapub}
+
+
+%%%%%%%%%%%%%%%%%%%
+%Sprachanpassung & Verbesserte Trennregeln
+%%%%%%%%%%%%%%%%%%%
+%\usepackage[english, main=ngerman]{babel} %Bericht in Deutsch->Im Preambel auch anpassen
+\usepackage[english, main=english]{babel} %Report in English->Im Preambel auch anpassen
+\usepackage[babel]{csquotes}
+
+
+%%%%%%%%%%%%%%%%%%%
+%Literaturverzeichnis
+%%%%%%%%%%%%%%%%%%%
+\usepackage[
+	backend=biber, 
+	doi=false, 
+	natbib=true, 
+	style=trad-alpha,
+	]{biblatex}  
+\addbibresource{references.bib}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Einstellungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Page layout / margins
+\usepackage{geometry}
+\geometry{ %weist die Seitenränder zu
+	reset,
+	top=25mm,    %25mm
+	left=20mm,   %20mm
+	right=20mm,  %20mm
+	bottom=24mm, %25mm
+	headsep=5mm, %4mm
+	footskip=9mm %8mm
+}
+
+\renewcommand\UrlFont{\small\ttfamily} %URLs haben die gleiche Schriftgöße wie Fließtext
+\renewcommand{\baselinestretch}{1.15} %Zeilenabstand 1.15
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Paketvorschläge %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Paketvorschläge Tabellen
+%
+%\usepackage{tabularx}  % Tabellen, die sich automatisch der Breite anpassen
+\usepackage{booktabs}   % Verbesserte Möglichkeiten für Tabellenlayout über horizontale Linien
+%\usepackage{array}     % Basispaket für Tabellenkonfiguration, wird von den folgenden automatisch geladen
+%\usepackage{longtable} % Mehrseitige Tabellen
+%\usepackage{xltabular} % Mehrseitige Tabellen mit anpassbarer Breite 
+%\usepackage{colortbl}   %Tabellenzeilen farblich hinterlegen
+%\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % linksbündig mit Breitenangabe
+%\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}} % zentriert mit Breitenangabe
+%\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} % rechtsbündig mit Breitenangabe
+
+%Paketvorschläge Mathematik
+%
+%\usepackage{mathtools}  % erweiterte Fassung von amsmath
+%\usepackage{amssymb}    % erweiterter Zeichensatz
+%\usepackage{siunitx}    % Einheiten
+%\sisetup{locale = DE}   % Einstellungen für siunitx
+\usepackage{amsmath}
+%\usepackage{units}		% Befehl \units[]{}
+%\usepackage[bitstream-charter]{mathdesign}
+
+%weitere Pakete
+%
+\usepackage{pdfpages}			% Ermöglicht einfügen von PDFs mit \includepdf
+\usepackage{geometry}			% Anpassen der Seitenrändern	
+\usepackage{graphicx}			% Umgebung zum Einfügen von Bildern
+\usepackage{subcaption}			% Einfüguen von mehreren Bildern nebeneinander
+\usepackage{setspace}			% Zeilenabstand --> wird später auf 1.15 gesetzt
+\usepackage{float}				% Floating Umgebung für Bilder --> diese können mit figure[H] festgehalten werden
+\usepackage{caption}
+\usepackage{hologo}
+\definecolor{fsrColor}{RGB}{93,133,195} % Beispiel für eine neue Farbe
+\usepackage{pdfpages}
+\usepackage{url}
+
+\usepackage{enumitem}
+
+% ── Code listings ────────────────────────────────────────────────────────────
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{200,200,200}
+\definecolor{codecomment}{RGB}{100,100,100}
+\definecolor{codestring}{RGB}{163,21,21}
+\definecolor{codekeyword}{RGB}{0,0,200}
+\lstset{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\small\ttfamily,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{codecomment},
+    numbersep=8pt,
+    captionpos=b,
+    aboveskip=8pt,
+    belowskip=4pt,
+    xleftmargin=14pt,
+    xrightmargin=4pt,
+    tabsize=4,
+}
+
+%Formatierungen für Beispiele in diesem Dokument. Im Allgemeinen nicht notwendig!
+%
+\let\file\texttt
+\let\code\texttt
+\let\pck\textsf
+\let\cls\textsf
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%ACRONYM PACKAGE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Das Acronym Package ermöglicht es, Abkürzungen in einem Abbildungsverzeichnis anzulegen und im Text Links zum Abkürzungsverzeichnis zu erstellen
+
+\usepackage{acronym}
+% provides \AtBeginEnvironment, \patchcmd and \csdef:
+\usepackage{etoolbox}
+
+\makeatletter
+\newcommand{\acroforeign}[1]{}
+
+% patch the environment to print the foreign definition:
+%\AtBeginEnvironment{acronym}{%
+%  \def\acroforeign#1{ (#1)}%
+%}
+
+% patch the acronym definition to safe the foreign definition:
+%\expandafter\patchcmd\csname AC@\AC@prefix{}@acro\endcsname
+%  {\begingroup}
+%  {\begingroup\def\acroforeign##1{\csdef{ac@#1@foreign}{##1, }}}
+%  {}
+%  {\fail}
+
+% %   renew the first output to include the foreign definition if given:
+%\renewcommand*{\@acf}[2][\AC@linebreakpenalty]{%
+%  \ifAC@footnote
+%    \acsfont{\csname ac@#2@foreign\endcsname\AC@acs{#2}}%
+%    \footnote{\AC@placelabel{#2}\AC@acl{#2}{}}%
+%  \else
+%    \acffont{%
+%      \AC@placelabel{#2}\AC@acl{#2}%
+%      \nolinebreak[#1] %
+%      \acfsfont{(\acsfont{\csname ac@#2@foreign\endcsname\AC@acs{#2}})}%
+%    }%
+%  \fi
+%  \ifAC@starred\else\AC@logged{#2}\fi
+%}
+\makeatother
+%%%%%Ende ACRONYM PACKAGE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{Kapitel/Settings.tex}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Starte Dokument %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Metadaten für PDF Erzeugung (glaube ich zumindest) %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Metadata{
+	title= Equity Data Analysis: Working Student Coding Exercise, %Komma hinter dem Titel nicht vergessen ;)
+	author= Hardik,
+	%	date=2019-04-29,
+    %	keywords=TU Darmstadt \sep Corporate Design \sep LaTeX
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Einstellungen Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\newcommand{\thesisTitel}{Equity Data Analysis: Working Student Coding Exercise}
+\newcommand{\authors}{Hardik}
+\newcommand{\betreuer}{}
+\newcommand{\professor}{}
+\newcommand{\dateOfSubmission}{\today}
+\birthplace{}						% Geburtsort, bei Dissertationen zwingend notwendig
+
+
+%\examdate{\today} 	% nicht erforderlich bei studentischen Arbeiten, kann auch bei Abschlussarbeiten freigelassen werden
+%\submissiondate{\dateOfSubmission}	% In diesem Feld muss mindestens ein Leerzeichen sein, damit "Tag der Einreichung" auf der Titelseite erscheint. Das Feld kann leer bleiben, das Datum wird bei Abgabe vom MechCenter eingetragen, nur bei Bachelor-/Masterthesen. Für ADP/ARP das Feld \date verwenden! 
+\date{\dateOfSubmission} %muss für Studienarbeiten aktiviert sein, bei BT/MT auskommentieren
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\\\vspace{5mm} \thesisTitel\vspace{5mm}}
+
+\author[\authors]{\authors}		% optionales Argument ist die Signatur,
+\reviewer{}	%Gutachter: mit \and können weitere Betreuer hinzugefügt werden
+\department{} 
+\institute{}
+\group{}
+%\tuprints{urn=1234,printid=12345}
+%\dedication{Für alle, die \TeX{} nutzen.}
+%\title{\thesisTitel}
+%\subtitle{\thesisTitelEnglish} %vspace(0.5cm) hinter den Titel, damit ein vertikaler Abstand zur nächsten Zeile erzeugt wird
+
+%Titel erstellen%
+%
+\maketitle
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front matter (roman page numbers) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+\tableofcontents
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main chapters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+\input{Kapitel/Chapter1}
+\input{Kapitel/Chapter2}
+\input{Kapitel/Chapter3}
+\input{Kapitel/Chapter4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[heading=bibintoc, title={References}]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of figures and tables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\listoffigures
+\listoftables
+\lstlistoflistings
+
+\end{document}

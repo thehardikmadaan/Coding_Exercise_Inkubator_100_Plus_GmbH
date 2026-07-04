@@ -1,0 +1,98 @@
+\chapter{Results}
+\label{chap:results}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Top 5 Performing Stocks}
+\label{sec:top5}
+
+After applying all data quality corrections from Chapter~\ref{chap:methodology}, the percentage return was computed for all 100 stocks over the June~1–October~13, 2021 window. Table~\ref{tab:top5} presents the five stocks with the highest returns, including their 30-day average trading volume.
+
+\begin{table}[H]
+\centering
+\caption{Top 5 Performing Stocks — June~1 to October~13, 2021}
+\label{tab:top5}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Company Name} & \textbf{Ticker} & \textbf{ISIN} & \textbf{Performance (\%)} & \textbf{30-Day Avg.\ Volume} \\
+\midrule
+General Electric & GENE & XX0000000010 & 940.00\% & 8{,}167{,}106 \\
+Netflix          & NETF & XX0000000028 & 180.00\% & 4{,}974{,}503 \\
+Adobe            & ADOB & XX0000000036 & 141.49\% & 3{,}084{,}781 \\
+Nokia            & NOKI & XX0000000044 & 110.00\% &         5{,}131 \\
+NVIDIA           & NVID & XX0000000051 &  85.00\% & 8{,}284{,}994 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Key observations about this table:
+
+\begin{itemize}
+    \item \textbf{Ranking robustness:} the gap between rank~5 (NVIDIA, 85.0\%) and rank~6 (Lockheed Martin, 69.85\%) is approximately 15 percentage points — a comfortable margin confirming the top-5 is not sensitive to small data noise or borderline corrections.
+
+    \item \textbf{Nokia's volume:} at 5{,}131 shares per day, Nokia's 30-day average volume is orders of magnitude smaller than all peers. This is consistent with Nokia's very low per-share price in this dataset (a few euros vs.\ hundreds for Adobe/Netflix) and was confirmed not to be a data error.
+
+    \item \textbf{Adobe's return:} the final figure of 141.49\% reflects the interpolated October~13 close price. Before the missing-value fix, the figure was 141.86\% (using October~12 as a substitute). The difference is small and did not affect the ranking.
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Price History Plots}
+\label{sec:plots}
+
+Figure~\ref{fig:price_plots} shows the daily close price of all five stocks across the analysis window. Two scales are presented.
+
+\textbf{Why two scales?} On the linear scale, General Electric's jump in August dominates the y-axis, compressing the other four stocks into a narrow band near the bottom. The logarithmic scale spreads the stocks proportionally to their growth rate, making all five trajectories clearly readable side by side.
+
+\textbf{Netflix dashed segment:} the dashed portion of Netflix's line (July 2021) marks the 22 consecutive missing trading days filled by linear interpolation. This is estimated data, not observed prices, and is styled differently to be transparent about this.
+
+The code below shows how the chart handles Netflix's interpolated gap honestly by splitting the series into three segments and rendering the middle one as dashed:
+
+\begin{lstlisting}[language=Python, caption={Plotting Netflix with a dashed interpolated segment}]
+netflix_gap_start = pd.Timestamp("2021-07-01")
+netflix_gap_end   = pd.Timestamp("2021-07-30")
+
+for _, row in top5.iterrows():
+    sw = window[window["isin"] == row["isin"]].sort_values("date")
+
+    if row["isin"] == "XX0000000028":   # Netflix
+        before = sw[sw["date"] < netflix_gap_start]
+        gap    = sw[(sw["date"] >= netflix_gap_start) &
+                    (sw["date"] <= netflix_gap_end)]
+        after  = sw[sw["date"] > netflix_gap_end]
+
+        # Bridge anchor points so dashed segment connects smoothly
+        bridge = pd.concat([sw[sw["date"] <= netflix_gap_start].tail(1),
+                            gap,
+                            sw[sw["date"] >= netflix_gap_end].head(1)])
+
+        line, = ax.plot(before["date"], before["close"], linewidth=2)
+        ax.plot(bridge["date"], bridge["close"],
+                color=line.get_color(), linestyle="--", linewidth=1.5)
+        ax.plot(after["date"],  after["close"],
+                color=line.get_color(), linewidth=2,
+                label=f"{row['name']} ({row['return_pct']:.1f}%)")
+    else:
+        ax.plot(sw["date"], sw["close"], linewidth=2,
+                label=f"{row['name']} ({row['return_pct']:.1f}%)")
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.95\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abbildungen/plot_normal.png}
+        \caption{Linear scale. General Electric's August jump is clearly visible. Nokia (orange) sits near zero due to its low absolute price.}
+        \label{fig:plot_normal}
+    \end{subfigure}
+
+    \vspace{4mm}
+
+    \begin{subfigure}[b]{0.95\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abbildungen/plot_log.png}
+        \caption{Logarithmic scale. All five trajectories are separated and readable; Nokia and NVIDIA are now clearly visible.}
+        \label{fig:plot_log}
+    \end{subfigure}
+
+    \caption{Daily close price of the top 5 performing stocks (June~1–October~13, 2021). The dashed Netflix segment indicates interpolated July 2021 data.}
+    \label{fig:price_plots}
+\end{figure}

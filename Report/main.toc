@@ -1,0 +1,20 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Task Overview}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Dataset Overview}{1}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Data Quality and Methodology}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Data Ingestion — Corrupted Column Header}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Systematic Outlier Detection and Correction}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Missing Value Treatment}{4}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Performance Calculation}{5}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Percentage Return}{5}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}30-Day Average Trading Volume}{6}{subsection.2.4.2}%
+\contentsline {chapter}{\numberline {3}Results}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Top 5 Performing Stocks}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Price History Plots}{8}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Further Observations and Conclusion}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}General Electric's Price Jump — a Level Shift, Not an Error}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Signs of Synthetic Data Design}{11}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Conclusion}{12}{section.4.3}%
+\contentsline {chapter}{\nonumberline References}{13}{chapter*.5}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,49 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+This report presents a complete equity data analysis carried out as part of a working student coding exercise. The dataset contains daily OHLCV (Open, High, Low, Close, Volume) records for 100 stock instruments across the full calendar year 2021. Although the data is synthetic, it is structured to mimic real-world market behaviour, with real company names used for illustrative purposes~\cite{ohlcv}.
+
+\medskip
+The analysis was carried out in Python~3 using \texttt{pandas}~\cite{pandas} for data manipulation and \texttt{matplotlib}~\cite{matplotlib} for visualisation. The full workflow is documented in \texttt{hardik\_src/solution.ipynb}.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Task Overview}
+The six objectives set by the examiner are:
+
+\begin{enumerate}
+    \item Identify the \textbf{top five performing stock titles} between June~1 and October~13, 2021.
+    \item Quantify the \textbf{percentage price increase} for each of those five stocks.
+    \item Calculate each stock's \textbf{30-day average trading volume} as of October~13, 2021.
+    \item \textbf{Plot the price history} of the top five performers over the analysis window.
+    \item Report any \textbf{additional observations} found while investigating the data.
+    \item Produce a \textbf{PDF table} showing company name, ISIN, performance, and 30-day average volume.
+\end{enumerate}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Dataset Overview}
+
+The dataset \texttt{data/prices.csv} consists of 26{,}100 rows covering 100 unique instruments. Table~\ref{tab:dataset_schema} describes the column layout.
+
+\begin{table}[H]
+\centering
+\caption{Schema of \texttt{prices.csv}}
+\label{tab:dataset_schema}
+\begin{tabular}{lll}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\texttt{date}   & datetime & Trading date (YYYY-MM-DD) \\
+\texttt{isin}   & string   & Instrument identifier (unique per company) \\
+\texttt{ticker} & string   & Short trading symbol \\
+\texttt{name}   & string   & Full company name \\
+\texttt{open}   & float    & Opening price of the trading day \\
+\texttt{high}   & float    & Intraday high price \\
+\texttt{low}    & float    & Intraday low price \\
+\texttt{close}  & float    & Closing price (used for performance) \\
+\texttt{volume} & float    & Number of shares traded \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+The report proceeds as follows: Chapter~\ref{chap:methodology} covers data quality issues and how they were fixed. Chapter~\ref{chap:results} presents the final ranked results, the required table, and the price history plots. Chapter~\ref{chap:observations} discusses additional patterns and anomalies found in the data.
