@@ -1,0 +1,152 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{matplotlib}{software}{}
+      \name{author}{1}{}{%
+        {{hash=a2f53dcc6bb05a06b8ad94176f80fe26}{%
+           family={Hunter},
+           familyi={H\bibinitperiod},
+           given={John\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \strng{fullhash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \strng{bibnamehash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \strng{authorbibnamehash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \strng{authornamehash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \strng{authorfullhash}{a2f53dcc6bb05a06b8ad94176f80fe26}
+      \field{labelalpha}{Hun07}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computing in Science \& Engineering}
+      \field{number}{3}
+      \field{title}{Matplotlib: A 2D Graphics Environment}
+      \field{volume}{9}
+      \field{year}{2007}
+      \field{pages}{90\bibrangedash 95}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/MCSE.2007.55
+      \endverb
+    \endentry
+    \entry{30day_volume}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=abcdb78a564e00abcb81ee953f22cf04}{%
+           family={{Investopedia}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{fullhash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{bibnamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authorbibnamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authornamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authorfullhash}{abcdb78a564e00abcb81ee953f22cf04}
+      \field{extraname}{1}
+      \field{labelalpha}{Inv23}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2024}
+      \field{title}{Average Daily Trading Volume ({ADTV})}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.investopedia.com/terms/a/averagedailytradingvolume.asp
+      \endverb
+      \verb{url}
+      \verb https://www.investopedia.com/terms/a/averagedailytradingvolume.asp
+      \endverb
+    \endentry
+    \entry{ohlcv}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=abcdb78a564e00abcb81ee953f22cf04}{%
+           family={{Investopedia}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{fullhash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{bibnamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authorbibnamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authornamehash}{abcdb78a564e00abcb81ee953f22cf04}
+      \strng{authorfullhash}{abcdb78a564e00abcb81ee953f22cf04}
+      \field{extraname}{2}
+      \field{labelalpha}{Inv23}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2024}
+      \field{title}{{OHLCV} Data: Open, High, Low, Close, Volume}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.investopedia.com/terms/o/ohlcv.asp
+      \endverb
+      \verb{url}
+      \verb https://www.investopedia.com/terms/o/ohlcv.asp
+      \endverb
+    \endentry
+    \entry{pandas}{software}{}
+      \name{author}{1}{}{%
+        {{hash=9a1f9219d00cef023c61c6fd71576d04}{%
+           family={team},
+           familyi={t\bibinitperiod},
+           given={The},
+           giveni={T\bibinitperiod},
+           prefix={pandas\bibnamedelima development},
+           prefixi={p\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Zenodo}%
+      }
+      \strng{namehash}{9a1f9219d00cef023c61c6fd71576d04}
+      \strng{fullhash}{9a1f9219d00cef023c61c6fd71576d04}
+      \strng{bibnamehash}{9a1f9219d00cef023c61c6fd71576d04}
+      \strng{authorbibnamehash}{9a1f9219d00cef023c61c6fd71576d04}
+      \strng{authornamehash}{9a1f9219d00cef023c61c6fd71576d04}
+      \strng{authorfullhash}{9a1f9219d00cef023c61c6fd71576d04}
+      \field{labelalpha}{pdtea23}
+      \field{sortinit}{p}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{pandas-dev/pandas: Pandas}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.5281/zenodo.3509134
+      \endverb
+      \verb{urlraw}
+      \verb https://pandas.pydata.org
+      \endverb
+      \verb{url}
+      \verb https://pandas.pydata.org
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

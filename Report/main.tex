@@ -59,7 +59,7 @@
 	captions=oneline,		% Passt die Bildunterschriften an
 	numbers=noenddot,		% Entfernt den Punkt hinter Sections/Abbildungen 1.1. --> 1.1
 	pdfa=true,				% aktiviert PDF/A --> mit LuaLaTex kompilieren 
-	%logofile=image,		% Falls die Logo Dateien nicht vorliegen
+	logofile=image,		% Falls die Logo Dateien nicht vorliegen
 ]{tudapub}
 
 
@@ -77,11 +77,10 @@
 \usepackage[
 	backend=biber, 
 	doi=false, 
-	%sorting = none, 
 	natbib=true, 
-	style=trad-alpha,	%numeric/alphabetic/trad-abbrv/trad-plain/trad-unsrt/trad-alpha
+	style=trad-alpha,
 	]{biblatex}  
-\addbibresource{DEMO-TUDaBibliography.bib} 	
+\addbibresource{references.bib}
 
 
 
@@ -113,7 +112,7 @@
 %Paketvorschläge Tabellen
 %
 %\usepackage{tabularx}  % Tabellen, die sich automatisch der Breite anpassen
-%\usepackage{booktabs}   % Verbesserte Möglichkeiten für Tabellenlayout über horizontale Linien
+\usepackage{booktabs}   % Verbesserte Möglichkeiten für Tabellenlayout über horizontale Linien
 %\usepackage{array}     % Basispaket für Tabellenkonfiguration, wird von den folgenden automatisch geladen
 %\usepackage{longtable} % Mehrseitige Tabellen
 %\usepackage{xltabular} % Mehrseitige Tabellen mit anpassbarer Breite 
@@ -142,12 +141,41 @@
 \usepackage{float}				% Floating Umgebung für Bilder --> diese können mit figure[H] festgehalten werden
 \usepackage{caption}
 \usepackage{hologo}
-\usepackage{xcolor}
 \definecolor{fsrColor}{RGB}{93,133,195} % Beispiel für eine neue Farbe
 \usepackage{pdfpages}
 \usepackage{url}
 
-\usepackage{enumitem} %external package added by jdtm for term definition
+\usepackage{enumitem}
+
+% ── Code listings ────────────────────────────────────────────────────────────
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{200,200,200}
+\definecolor{codecomment}{RGB}{100,100,100}
+\definecolor{codestring}{RGB}{163,21,21}
+\definecolor{codekeyword}{RGB}{0,0,200}
+\lstset{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\small\ttfamily,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{codecomment},
+    numbersep=8pt,
+    captionpos=b,
+    aboveskip=8pt,
+    belowskip=4pt,
+    xleftmargin=14pt,
+    xrightmargin=4pt,
+    tabsize=4,
+}
 
 %Formatierungen für Beispiele in diesem Dokument. Im Allgemeinen nicht notwendig!
 %
@@ -216,8 +244,8 @@
 % Metadaten für PDF Erzeugung (glaube ich zumindest) %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Metadata{
-	title= Effectiveness Analysis of RTCA DO-323 SURF IA System on Historical Data, %Komma hinter dem Titel nicht vergessen ;)
-	author= Mikaela Aleinikova, Rodrigo David Loza Egoavil, Hardik, Sajad Jafari Kichi, Jonathan David Magsino,
+	title= Equity Data Analysis: Working Student Coding Exercise, %Komma hinter dem Titel nicht vergessen ;)
+	author= Hardik,
 	%	date=2019-04-29,
     %	keywords=TU Darmstadt \sep Corporate Design \sep LaTeX
 }
@@ -227,12 +255,12 @@
 % Einstellungen Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\newcommand{\thesisTitel}{Effectiveness Analysis of RTCA DO-323 SURF IA System on Historical Data}
-\newcommand{\authors}{Mikaela Aleinikova (2554541), Rodrigo David Loza Egoavil (2367521), Hardik (2791472), Sajad Jafari Kichi (2275545), Jonathan David Magsino (2275545)}
-\newcommand{\betreuer}{Mikaela Aleinikova}
-\newcommand{\professor}{Pascal Menner, M.Sc.}
-\newcommand{\dateOfSubmission}{25.12.2026}
-\birthplace{Geburtsort}						% Geburtsort, bei Dissertationen zwingend notwendig
+\newcommand{\thesisTitel}{Equity Data Analysis: Working Student Coding Exercise}
+\newcommand{\authors}{Hardik}
+\newcommand{\betreuer}{}
+\newcommand{\professor}{}
+\newcommand{\dateOfSubmission}{\today}
+\birthplace{}						% Geburtsort, bei Dissertationen zwingend notwendig
 
 
 %\examdate{\today} 	% nicht erforderlich bei studentischen Arbeiten, kann auch bei Abschlussarbeiten freigelassen werden
@@ -243,10 +271,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{\\\vspace{5mm} \thesisTitel\vspace{5mm}}
-\subtitle{\thesisTitelEnglish \vspace{5mm}} 
+
 \author[\authors]{\authors}		% optionales Argument ist die Signatur,
-\reviewer{\professor \and \betreuer}	%Gutachter: mit \and können weitere Betreuer hinzugefügt werden
-\department{\includegraphics[width=3.8cm]{Abbildungen/FSRLogo.pdf}} 
+\reviewer{}	%Gutachter: mit \and können weitere Betreuer hinzugefügt werden
+\department{} 
 \institute{}
 \group{}
 %\tuprints{urn=1234,printid=12345}
@@ -258,111 +286,35 @@
 %
 \maketitle
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 2. Seite (weiße Seite mit Titel) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\input{Kapitel/SecondPage}
-\newpage
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Aufgabenstellung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front matter (roman page numbers) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frontmatter %Seitenzahlen in Römischen Ziffern, funktioniert auch mit Befehl "\pagenumbering{Roman}"
-\includepdf{Aufgabenstellung/ADP Description.pdf}
+\frontmatter
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Erklärung zur Abschlussarbeit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{Kapitel/ErklaerungZurAbschlussarbeit.tex}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Kurzfassung bei Abschlussarbeit in Deutsch %%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{abstract}[english]
-\input{Kapitel/Abstract.tex}
-\end{abstract}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Kurzfassung bei Abschlussarbeit in Englisch %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{abstract}[english]
-%Zusätzliche Zusammenfassung in englischer Sprache
-%\end{abstract}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Inhaltsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
-\newpage
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Nomenklatur %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\phantomsection
-\input{Kapitel/Nomenclature.tex}%Diese Zeile auskommentieren, wenn keine Nomenklatur vorhanden
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Abkürzungsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\phantomsection
-\input{Kapitel/LOA}%Diese Zeile auskommentieren, wenn kein Abkürzungsverzeichnis vorhanden
 \clearpage
 
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Kapitel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\mainmatter %Seitenzahlen in Römischen Ziffern, funktioniert auch mit Befehl "\pagenumbering{arabic}}"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main chapters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
 
 \input{Kapitel/Chapter1}
 \input{Kapitel/Chapter2}
 \input{Kapitel/Chapter3}
 \input{Kapitel/Chapter4}
-\input{Kapitel/Chapter5}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Literatur %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\phantomsection
-
-%\addcontentsline{toc}{chapter}{\bibname} %Literaturverzeichnis zum Inhaltesverzeichnis hinzufügen
-%\raggedright
-% \sloppy %Damit die URLS nicht über den Rand hinausstehen
-
-\printbibliography 
-
+\printbibliography[heading=bibintoc, title={References}]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Abbildungs- unf Tabellenverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of figures and tables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listoffigures
 \listoftables
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Anhang %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\appendix
-
-\addcontentsline{toc}{chapter}{Anhang}
-\renewcommand{\thesection}{\Alph{section}}
-\counterwithin{figure}{section}
-\addtocontents{toc}{\protect\setcounter{tocdepth}{1}} 	%-1: nur Kapitel "Anhang" wird im Inhaltsverzeichnis gezeigt. 
-														%1: Sections werden angezeigt
-
-\include{Kapitel/Attachments}
+\lstlistoflistings
 
 \end{document}

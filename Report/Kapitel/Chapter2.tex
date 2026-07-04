@@ -1,0 +1,178 @@
+\chapter{Data Quality and Methodology}
+\label{chap:methodology}
+
+Before any performance metrics were computed, the dataset was put through a careful quality review. Several structural problems were found that, if left uncorrected, would have distorted the final ranking. Each issue is described below alongside the code used to detect and fix it.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Data Ingestion — Corrupted Column Header}
+\label{sec:ingestion}
+
+Loading the CSV with a standard call failed because the first column was not named \texttt{date}. It contained a stray \LaTeX{} command prefix — \texttt{\textbackslash usepackage\{ulem\}date} — embedded in the column name, a leftover artefact from how the file was generated. Pandas could not match that string to \texttt{"date"}, so \texttt{parse\_dates} silently failed and the date column was read as plain text.
+
+\textbf{Fix:} load without \texttt{parse\_dates}, rename column~0 unconditionally, then convert to \texttt{datetime}.
+
+\begin{lstlisting}[language=Python, caption={Robust CSV loading — handling the corrupted header}]
+import pandas as pd
+from pathlib import Path
+
+def load_data(filename="prices.csv"):
+    base = Path(__file__).resolve().parent.parent / "data"
+    df = pd.read_csv(base / filename, header=0)
+    # Column 0 has a corrupted name (\usepackage{ulem}date) — rename it
+    df.columns = ["date"] + list(df.columns[1:])
+    df["date"] = pd.to_datetime(df["date"])
+    return df
+
+df = load_data()
+print(df.shape)   # (26100, 9)
+\end{lstlisting}
+
+This approach does not depend on knowing the exact garbage text in the header, making it robust to similar corruption in future data drops.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Systematic Outlier Detection and Correction}
+\label{sec:outliers}
+
+A statistical summary (\texttt{df.describe()}) immediately flagged a problem: the \texttt{high} and \texttt{close} columns had maximum values several times larger than those of \texttt{open} and \texttt{low}. By definition, these four columns must be close in magnitude for any single trading day — the day's \texttt{high} cannot be an order of magnitude above its own \texttt{open}.
+
+Tracing the anomaly to its first source row identified \textbf{Microsoft (MICR) on 2021-11-15}: \texttt{high} and \texttt{close} were inflated by a factor of approximately~11 relative to \texttt{open}, \texttt{low}, and the prices on neighboring days.
+
+\begin{lstlisting}[language=Python, caption={Detecting the first outlier row}]
+# The describe() showed high.max() ~ 6632 vs open.max() ~ 1797
+print(df.loc[df["high"].idxmax()])
+
+# Output (Microsoft, 2021-11-15):
+# open    1649.09   low     1649.09
+# high    6632.00   close   6502.00  <-- ~11x inflated
+\end{lstlisting}
+
+After confirming the pattern on two more stocks (Intel on 2021-06-07, Coca-Cola on 2021-02-19), the check was generalised to a systematic scan across the full dataset:
+
+\begin{lstlisting}[language=Python, caption={Systematic outlier scan and blanket fix}]
+# Flag rows where high or close is more than 3x the row's own open/low max
+mask = (
+    (df["high"]  > df[["open", "low"]].max(axis=1) * 3) |
+    (df["close"] > df[["open", "low"]].max(axis=1) * 3)
+)
+print(f"Suspect rows: {mask.sum()}")   # 7 remaining after first 3 manual fixes
+
+# Apply fix: divide the inflated columns by 10
+df.loc[mask, ["high", "close"]] = df.loc[mask, ["high", "close"]] / 10
+
+# Verify: re-run scan — should return 0
+recheck = (df["high"] > df[["open","low"]].max(axis=1)*3) | \
+          (df["close"] > df[["open","low"]].max(axis=1)*3)
+print(f"Remaining outliers: {recheck.sum()}")  # 0
+\end{lstlisting}
+
+\textbf{Total rows corrected:} 10 out of 26{,}100 (less than 0.04\%). All 10 shared the identical signature: only \texttt{high} and \texttt{close} inflated, by approximately~11×, while \texttt{open} and \texttt{low} were unaffected. The affected stocks included Microsoft, Intel, Coca-Cola, AT\&T, Amazon, Apple, Cisco, ExxonMobil, Ford, and Pfizer.
+
+\textbf{Important caveat:} the division by~10 is an \emph{inferred} correction based on pattern-matching. The corrected values fit smoothly into the surrounding price series, but this cannot be verified as the true original value. Five of the ten affected rows (Ford, ExxonMobil, Amazon, Cisco, Pfizer) fell inside the June~1–October~13 analysis window — leaving them uncorrected would have produced false top performers.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Missing Value Treatment}
+\label{sec:missing}
+
+The dataset contained \textbf{23 missing rows} with all price and volume columns set to \texttt{NaN}, concentrated in two stocks:
+
+\begin{itemize}
+    \item \textbf{Adobe (ADOB):} one row missing, exactly on October~13, 2021 — the analysis end date.
+    \item \textbf{Netflix (NETF):} 22 consecutive missing trading days covering all of July 2021.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption={Locating all missing rows}]
+missing = df[df[["open","high","low","close","volume"]].isna().any(axis=1)]
+print(missing[["date","ticker","open","close"]].to_string())
+# Total rows with missing values: 23
+# Adobe:   1 row on 2021-10-13
+# Netflix: 22 rows, 2021-07-01 to 2021-07-30
+\end{lstlisting}
+
+Before applying a fix, the impact on the performance calculation was checked. The calculation used \texttt{groupby().last()}, which is a pandas aggregation that returns the last \emph{non-null} value per column — so Adobe's end price had already been silently substituted with October~12's close. This was verified by inspecting the raw rows.
+
+\textbf{Fix applied:} linear interpolation, grouped independently per ticker.
+
+\begin{lstlisting}[language=Python, caption={Per-ticker linear interpolation for missing values}]
+df = df.sort_values(["isin", "date"]).reset_index(drop=True)
+
+price_cols = ["open", "high", "low", "close", "volume"]
+df[price_cols] = (
+    df.groupby("isin")[price_cols]
+      .transform(lambda s: s.interpolate(method="linear"))
+)
+
+# Verify: all NaN gone
+print(df[price_cols].isna().sum())  # 0 for all columns
+\end{lstlisting}
+
+Grouping by \texttt{isin} before interpolating is essential — without it, interpolation runs across the sorted date column and blends one stock's prices into another stock's data gap.
+
+\textbf{Effect on results:} Adobe's return shifted from 141.86\% (Oct~12 substitute) to \textbf{141.49\%} (interpolated Oct~13 value). The ranking order was unaffected. Netflix's return (180.00\%) was unchanged since its gap sits in the \emph{middle} of the window, not at a boundary used in the return calculation.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Performance Calculation}
+\label{sec:perf_method}
+
+\subsection{Percentage Return}
+Performance was measured using the daily \texttt{close} price, which is the standard end-of-day reference price in finance. The return formula is:
+
+\begin{equation}
+    \text{Return} (\%) = \frac{P_{\text{end}} - P_{\text{start}}}{P_{\text{start}}} \times 100
+\end{equation}
+
+\begin{lstlisting}[language=Python, caption={Computing percentage return for all 100 stocks}]
+START_DATE = "2021-06-01"
+END_DATE   = "2021-10-13"
+
+window = df[(df["date"] >= START_DATE) & (df["date"] <= END_DATE)].copy()
+
+# Use first/last within window — robust to stocks not trading on boundary dates
+start_prices = (window.sort_values("date")
+                      .groupby("isin")
+                      .first()[["name", "ticker", "close"]]
+                      .rename(columns={"close": "start_close"}))
+
+end_prices   = (window.sort_values("date")
+                      .groupby("isin")
+                      .last()[["close"]]
+                      .rename(columns={"close": "end_close"}))
+
+perf = start_prices.join(end_prices)
+perf["return_pct"] = (perf["end_close"] - perf["start_close"]) / \
+                      perf["start_close"] * 100
+
+top5 = perf.nlargest(5, "return_pct").reset_index()
+\end{lstlisting}
+
+Using \texttt{groupby().first()} and \texttt{.last()} rather than exact date lookups makes the calculation robust to stocks that may not have traded on June~1 or October~13 exactly.
+
+\subsection{30-Day Average Trading Volume}
+\label{subsec:volume}
+
+``30-day average volume'' is an ambiguous term. The analysis used \textbf{30 trading days} (the 30 most recent rows of actual data on or before October~13), which is the standard convention in financial screening tools~\cite{30day_volume}.
+
+A key implementation detail: the 30-trading-day lookback reaches back before June~1 for some stocks. The query was run against the \textbf{full dataset}, not the filtered analysis window, to avoid silently truncating the lookback.
+
+\begin{lstlisting}[language=Python, caption={30-day average volume calculation with a self-check}]
+def avg_volume_30d(isin, end_date, n=30):
+    stock_data = (df[(df["isin"] == isin) & (df["date"] <= end_date)]
+                    .sort_values("date"))
+    last_n = stock_data.tail(n)
+    # days_used lets us verify that 30 rows actually existed
+    return last_n["volume"].mean(), len(last_n)
+
+volume_results = []
+for isin in top5["isin"].tolist():
+    avg_vol, days_found = avg_volume_30d(isin, END_DATE)
+    volume_results.append({
+        "isin":           isin,
+        "avg_volume_30d": avg_vol,
+        "days_used":      days_found
+    })
+
+vol_df   = pd.DataFrame(volume_results)
+top5_final = top5.merge(vol_df, on="isin")
+# All 5 stocks returned days_used == 30 — no data gaps
+\end{lstlisting}
+
+The \texttt{days\_used} column is a self-check: if any stock had returned fewer than 30, it would mean a data gap or short history that should be flagged rather than silently averaged over less data than intended. All five top performers returned \texttt{days\_used = 30}.
