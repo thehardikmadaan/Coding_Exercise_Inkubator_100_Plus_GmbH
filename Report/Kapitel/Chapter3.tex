@@ -19,7 +19,7 @@ Netflix          & NETF & XX0000000028 & 180.00\% & 4{,}974{,}503 \\
 Adobe            & ADOB & XX0000000036 & 141.49\% & 3{,}084{,}781 \\
 Nokia            & NOKI & XX0000000044 & 110.00\% &         5{,}131 \\
 NVIDIA           & NVID & XX0000000051 &  85.00\% & 8{,}284{,}994 \\
-Lockheed Martin  & LOCK & XX0000000531 &  69.85\% & 1{,}469{,}291 \\
+Lockheed Martin  & LOCK & XX0000000531 &  69.85\% & 17{,}737{,}050 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -53,7 +53,7 @@ netflix_gap_end   = pd.Timestamp("2021-07-30")
 for _, row in top5.iterrows():
     sw = window[window["isin"] == row["isin"]].sort_values("date")
 
-    if row["isin"] == "XX0000000028":   # Netflix
+    if row["isin"] == "XX0000000028":   # Netflix - dashed interpolated segment
         before = sw[sw["date"] < netflix_gap_start]
         gap    = sw[(sw["date"] >= netflix_gap_start) &
                     (sw["date"] <= netflix_gap_end)]
@@ -64,15 +64,11 @@ for _, row in top5.iterrows():
                             gap,
                             sw[sw["date"] >= netflix_gap_end].head(1)])
 
-        line, = ax.plot(before["date"], before["close"], linewidth=2)
-        ax.plot(bridge["date"], bridge["close"],
-                color=line.get_color(), linestyle="--", linewidth=1.5)
-        ax.plot(after["date"],  after["close"],
-                color=line.get_color(), linewidth=2,
-                label=f"{row['name']} ({row['return_pct']:.1f}%)")
+        line, = ax.plot(before["date"], before["indexed"], linewidth=2, label=label)
+        ax.plot(bridge["date"], bridge["indexed"], color=line.get_color(), linestyle="--", linewidth=1.5)
+        ax.plot(after["date"], after["indexed"], color=line.get_color(), linewidth=2)
     else:
-        ax.plot(sw["date"], sw["close"], linewidth=2,
-                label=f"{row['name']} ({row['return_pct']:.1f}%)")
+        ax.plot(sw["date"], sw["indexed"], linewidth=2, label=label)
 \end{lstlisting}
 
 \begin{figure}[H]
