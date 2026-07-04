@@ -127,27 +127,56 @@ Adobe's `end_close` changed from 1026.4742 (Oct 12 substitute) → 1024.90655 (i
 
 ---
 
-## Phase 4: Plot — Price History of Top 5
+## Phase 4: GE Price Jump — Investigated Further, Treated as a Reverse Stock Split
 
-**Approach:** line chart of `close` price for all 5 stocks over the June 1–Oct 13 window. Netflix's interpolated July segment is drawn as a dashed line (bridged to the solid segments on either side using one anchor point each), so the chart is honest about what's observed vs. estimated data.
+**Initial finding (as before):** GE's `open/high/low/close` all shifted together by ~8x on 2021-08-02, and the new level held steady afterward — ruled out as a repeat of the earlier 11x row-corruption bug (that pattern was isolated to `high`/`close` only, on single rows, reverting the next day). This one is a persistent, whole-row, multi-column shift.
 
-**Finding while reviewing the plot — General Electric shows a sharp vertical jump around Aug 2, 2021.**
+**Follow-up check that changed the conclusion — volume behavior at the same date:**
 
-Initially suspected as a rendering bug or a duplicate-date issue (same failure mode that would produce a vertical spike in a line chart). Investigated:
-- Confirmed zero duplicate dates for GE.
-- Inspected the raw rows around the jump: `open/high/low/close` all shift together from ~22 (July 30) to ~182 (Aug 2) — a roughly 8x level shift across **all four price columns simultaneously**, not just `high`/`close` like the earlier 11x outlier bug. Crucially, the new price level then **holds steady afterward** rather than snapping back — this is a real level-shift, not a one-row glitch.
-- Confirmed via `pct_change()` across GE's full year: the Aug 2 daily change is **+694%**, versus a next-largest daily move of only **+7.3%** (Feb 2). Every other day in the year sits in normal single-digit noise. This is a single, isolated discontinuity — not a recurring problem.
+```python
+ge[(ge["date"] >= "2021-07-26") & (ge["date"] <= "2021-08-06")]
+```
 
-**Conclusion: this is not a data error and was NOT corrected.** It's almost certainly the mechanism behind GE's designed 940% return — consistent with the earlier observation that the top performers' returns (940%, 180%, 110%, 85%) look like clean, hardcoded target values. A discrete jump on a specific date is a plausible way a data generator would implement a target return (pick start price, end price, and a jump date, then fill smooth noise on either side) rather than a smooth exponential climb the whole way.
+Result: volume drops sharply exactly on the jump date — from a ~22M–69M/day range before Aug 2, down to a ~5M–12M/day range after. A simultaneous price ↑ / volume ↓ shift, both on the same date, is the textbook signature of a **reverse stock split**: fewer shares outstanding after the split means less volume, while price rises to compensate, with no change in total market value. This evidence was not checked in the first pass — only price columns had been examined — and it meaningfully shifts the interpretation.
 
-**Why this matters:** unlike the earlier outlier bug, this should be preserved, not smoothed — correcting it would erase the very thing that makes GE the top performer. Phase 2's return calculation (start vs. end price only) is unaffected by *how* the price moved in between, but the plot needed to show it accurately, and it does. This is documented here as an observation for task 5 ("anything else interesting"), not treated as a bug to fix.
+**Decision: treated as a 1-for-8 reverse stock split, and corrected for it.**
+
+```python
+mask_gene = (df["ticker"] == "GENE") & (df["date"] < "2021-08-02")
+df.loc[mask_gene, ["open", "high", "low", "close"]] *= 8
+df.loc[mask_gene, "volume"] /= 8
+```
+
+**Reasoning:** a reverse split increases per-share price without representing any real gain to an investor's holdings (share count falls proportionally) — leaving it unadjusted would produce a mathematically correct but financially misleading 940% "return" that doesn't reflect true organic performance. Multiplying GE's pre-split prices by 8 restores a consistent historical baseline for comparison against its post-split price.
+
+**Caveat — this remains an inferred interpretation, not a certainty:**
+- The volume ratio isn't a perfectly clean 8x (observed roughly 4–6x across different day pairs), whereas a textbook 1-for-8 split would show almost exactly 1/8th volume. It's suggestive, not conclusive.
+- There's no external record (filing, news) to confirm this against, since the dataset is synthetic — this is inferred purely from the shape of the data, same epistemic status as the earlier outlier-correction inference.
+- An equally coherent alternative interpretation (considered in the first pass) is that this is a deliberately designed "jump" mechanism the dataset's generator used to create a synthetic top performer — supported by the observation that several other top performers show suspiciously round-number returns (180.00%, 110.00%, 85.00%). This alternative was not disproven, only outweighed by the new volume evidence.
+
+**Effect on results:** after adjustment, GE's return over the window drops to well under 30%, removing it from the top 5. **Lockheed Martin (LOCK)** takes the 5th spot instead, with a verified return of 69.85%.
+
+---
+
+## Final, Fully-Verified Top 5 (after all fixes: outlier correction + interpolation + GE split adjustment)
+
+| Name | Ticker | ISIN | Return % | 30-Day Avg Volume |
+|---|---|---|---|---|
+| Netflix | NETF | XX0000000028 | 180.00% | 4,974,503 |
+| Adobe | ADOB | XX0000000036 | 141.49% | 3,084,781 |
+| Nokia | NOKI | XX0000000044 | 110.00% | 5,131 |
+| NVIDIA | NVID | XX0000000051 | 85.00% | 8,284,994 |
+| Lockheed Martin | LOCK | XX0000000531 | 69.85% | **17,737,050** |
+
+**Important correction to flag:** an earlier draft PDF listed Lockheed Martin's 30-day avg volume as 1,469,291 — this number was checked against the raw data (every day in the 30-day window shows volume between ~9M–30M, averaging ~17.7M) and does not match anything computable from the dataset. It appears to have been written into the report without being generated from actual code, the same issue found earlier with a fabricated Microsoft example value in an early draft. **17,737,050 is the correct, verified figure** and should replace it in any final report.
 
 ---
 
 ## Still To Do
 
-- **PDF deliverable:** table of name, ISIN, performance %, 30-day avg volume for the top 5 (numbers finalized above).
-- **Write-up:** consolidate all judgment calls and observations above.
+- **Full audit of the PDF report** against the actual notebook: at least two numbers (a Microsoft example value, Lockheed Martin's volume) were found asserted in the report without matching the real computed output. Before finalizing, every figure in the report should be checked against notebook output directly, not retyped from memory or drafted separately.
+- **PDF deliverable:** regenerate the results table with Lockheed Martin's corrected volume figure.
+- **Write-up:** update Section 4.1 to reflect the actual reasoning trail above (initial ambiguity → volume check → decision → explicit caveat about alternative interpretation), rather than presenting the reverse-split conclusion as an immediately obvious, uncontested fact.
 
 ---
 
