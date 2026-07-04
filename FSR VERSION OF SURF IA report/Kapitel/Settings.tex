@@ -1,0 +1,66 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Überschriften anpassen%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%Nachfolgender Block setzt die Schrift von Sections mittig zwischen die Linien
+\makeatletter
+\ExplSyntaxOn
+	\renewcommand*\sectionlinesformat[4]{%
+	\parbox{\linewidth}{
+		\rule[5\g_ptxcd_titlerule_dim]{\linewidth}{\g_ptxcd_titlerule_dim}\par\nointerlineskip %3,2
+		\@hangfrom{%
+			\hskip #2#3\strut}{#4\rule[-\dp\strutbox]{0pt}{\dp\strutbox}\par}\nointerlineskip
+			\skip_vertical:n {\ptxcd_titlerule_sep: -\dp\strutbox}
+		%\smash{\rule{\linewidth}{\g_TUDa_titlerule_dim}}%Original Latex-TU-Vorlage
+		\smash{\rule[-1.75\g_ptxcd_titlerule_dim]{\linewidth}{\g_ptxcd_titlerule_dim}}
+	}
+	}
+\makeatother
+\ExplSyntaxOff
+
+
+%Nachfolgender Block entfernt die Linien unterhalb der \chapters
+\makeatletter
+\ExplSyntaxOn
+%\cs_if_exist:NT \chapterlinesformat {
+		\renewcommand*{\chapterlinesformat}[3]{%
+			\@hangfrom{#2}{#3}
+			%\smash{\raisebox{\depth}{\rule[\dp\strutbox]{\linewidth}{\g_TUDa_titlerule_dim}}}
+		}
+%	}
+\ExplSyntaxOff
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Schriftgrößen anpassen%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Schriftgrößen an alte Vorlage anpassen
+\newcommand{\chapterFontSize}{\fontsize{23.2}{27.8}\selectfont} %Schriftgröße Chapter an alte Vorlage anpassen (gilt nur für Standartschriftgröße 11pt)
+\newcommand{\sectionFontSize}{\fontsize{12.0}{14}\selectfont} %Schriftgröße Sections an alte Vorlage anpassen (gilt nur für Standartschriftgröße 11pt) 11.6/16.2 --> Schriftgröße/Abstand Linien
+\addtokomafont{chapter}{\chapterFontSize}
+\addtokomafont{section}{\sectionFontSize }
+\addtokomafont{subsection}{\normalfont \sffamily \large}
+\addtokomafont{subsubsection}{\normalfont \sffamily \large}
+
+%Bildunterschrift anpassen
+%\addtokomafont{captionlabel}{\small \bfseries \sffamily} 	% "Abbildung 1.1" wird in footnotesize, serifenlos und fett geschrieben
+%\addtokomafont{caption}{\small \sffamily}					% Captiontext wird in footnotesize und serifenlos geschrieben		
+
+%\newcommand{\fontAffidavit}{\sffamily}				%Schriftart der Erklärung serifenlos
+%\newcommand{\fontSecondPage}{\sffamily}				%Schriftart der zweiten Seite serifenlos
+	
+%Änder die Größe der Chapter-Überschrift
+%\providecommand{\chapterlinesize}{}
+%\renewcommand{\chapterlinesize}{\fontsize{23.2}{27.8}\selectfont}
+
+%Schriftgröße des Thesistitels anpassen
+\ExplSyntaxOn
+\cs_set:Nn \ptxcd_title_fontsize: {{30}{34}}% Original 36/47
+\ExplSyntaxOff
+
+%Schriftgrößer der URLs anpassen
+\renewcommand\UrlFont{\small\ttfamily}		%URLs haben die gleiche Schriftgöße wie Fließtext
