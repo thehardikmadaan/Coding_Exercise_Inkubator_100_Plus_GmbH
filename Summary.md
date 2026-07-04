@@ -127,10 +127,26 @@ Adobe's `end_close` changed from 1026.4742 (Oct 12 substitute) → 1024.90655 (i
 
 ---
 
+## Phase 4: Plot — Price History of Top 5
+
+**Approach:** line chart of `close` price for all 5 stocks over the June 1–Oct 13 window. Netflix's interpolated July segment is drawn as a dashed line (bridged to the solid segments on either side using one anchor point each), so the chart is honest about what's observed vs. estimated data.
+
+**Finding while reviewing the plot — General Electric shows a sharp vertical jump around Aug 2, 2021.**
+
+Initially suspected as a rendering bug or a duplicate-date issue (same failure mode that would produce a vertical spike in a line chart). Investigated:
+- Confirmed zero duplicate dates for GE.
+- Inspected the raw rows around the jump: `open/high/low/close` all shift together from ~22 (July 30) to ~182 (Aug 2) — a roughly 8x level shift across **all four price columns simultaneously**, not just `high`/`close` like the earlier 11x outlier bug. Crucially, the new price level then **holds steady afterward** rather than snapping back — this is a real level-shift, not a one-row glitch.
+- Confirmed via `pct_change()` across GE's full year: the Aug 2 daily change is **+694%**, versus a next-largest daily move of only **+7.3%** (Feb 2). Every other day in the year sits in normal single-digit noise. This is a single, isolated discontinuity — not a recurring problem.
+
+**Conclusion: this is not a data error and was NOT corrected.** It's almost certainly the mechanism behind GE's designed 940% return — consistent with the earlier observation that the top performers' returns (940%, 180%, 110%, 85%) look like clean, hardcoded target values. A discrete jump on a specific date is a plausible way a data generator would implement a target return (pick start price, end price, and a jump date, then fill smooth noise on either side) rather than a smooth exponential climb the whole way.
+
+**Why this matters:** unlike the earlier outlier bug, this should be preserved, not smoothed — correcting it would erase the very thing that makes GE the top performer. Phase 2's return calculation (start vs. end price only) is unaffected by *how* the price moved in between, but the plot needed to show it accurately, and it does. This is documented here as an observation for task 5 ("anything else interesting"), not treated as a bug to fix.
+
+---
+
 ## Still To Do
 
-- **Plot:** price history of the top 5 over the June–October window. Note: Netflix's July segment will now show interpolated (estimated) rather than observed values — worth a visual annotation or at least a written disclosure.
-- **PDF deliverable:** table of name, ISIN, performance %, 30-day avg volume for the top 5 (numbers above, now final).
+- **PDF deliverable:** table of name, ISIN, performance %, 30-day avg volume for the top 5 (numbers finalized above).
 - **Write-up:** consolidate all judgment calls and observations above.
 
 ---
